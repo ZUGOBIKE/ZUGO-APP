@@ -3,106 +3,693 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZUGO Bike — Powerful & Stylish E-Bikes</title>
+  <meta name="description" content="Powerful & stylish electric bikes designed & engineered in Austin, TX. 750W motor, up to 80 miles range.">
   <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <title>The Austin YOUR_PROPERTY_NAME</title>
-  <meta name="description" content="At the Austin YOUR_PROPERTY_NAME our mission is to let your Property Dreams run free. Our goal is to redefine your idea of what an YOUR_PROPERTY_NAME can be.">
-  <meta name="facebook-domain-verification" content="b80sfd6vsd4k9n0xmojhitut710nbl" />
-  <link rel="canonical" href="https://YOUR_DOMAIN/">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; color: #1c1d1d; background: #fff; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://YOUR_DOMAIN/">
-  <meta property="og:title" content="The Austin YOUR_PROPERTY_NAME">
-  <meta property="og:description" content="At the Austin YOUR_PROPERTY_NAME our mission is to let your Property Dreams run free. Our goal is to redefine your idea of what an YOUR_PROPERTY_NAME can be.">
-  <meta property="og:site_name" content="Austin YOUR_PROPERTY_NAME">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://YOUR_DOMAIN/shared/og-image.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+    /* ── Announcement Bar ── */
+    .announcement {
+      background: linear-gradient(90deg, #471669, #a22155);
+      color: #fff;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .announcement a { color: #fff; text-decoration: underline; }
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Austin YOUR_PROPERTY_NAME">
-  <meta name="twitter:description" content="At the Austin YOUR_PROPERTY_NAME our mission is to let your Property Dreams run free. Our goal is to redefine your idea of what an YOUR_PROPERTY_NAME can be.">
-  <meta name="twitter:image" content="https://YOUR_DOMAIN/shared/og-image.jpg">
+    /* ── Navbar ── */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 40px;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .navbar__logo img { height: 38px; }
+    .navbar__links { display: flex; gap: 24px; align-items: center; }
+    .navbar__links a { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; transition: color .2s; }
+    .navbar__links a:hover { color: #a22155; }
+    .navbar__actions { display: flex; gap: 18px; align-items: center; }
+    .navbar__actions svg { width: 22px; height: 22px; cursor: pointer; }
+    .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; }
+    .mobile-menu-btn span { display: block; width: 24px; height: 2px; background: #1c1d1d; margin: 5px 0; }
 
-  <!-- JSON-LD: WebSite -->
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebSite","name":"Austin YOUR_PROPERTY_NAME","url":"https://YOUR_DOMAIN/","description":"Creative compound in Your City, Texas","publisher":{"@type":"Organization","name":"Austin YOUR_PROPERTY_NAME"}}
-  </script>
+    @media (max-width: 1024px) {
+      .navbar__links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .navbar { padding: 14px 20px; }
+    }
 
-  <!-- JSON-LD: LocalBusiness -->
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"LocalBusiness","name":"Austin YOUR_PROPERTY_NAME","url":"https://YOUR_DOMAIN/","telephone":"+17377474737","address":{"@type":"PostalAddress","streetAddress":"123 Main Stive","addressLocality":"Your City","addressRegion":"TX","postalCode":"00000","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":30.13,"longitude":-97.46},"sameAs":["https://www.instagram.com/yourorgatx/"],"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":"10:00","closes":"17:00"},"founder":{"@type":"Person","name":"Rahul Sonnad","url":"https://YOUR_DOMAIN/rahulio/bio/"}}
-  </script>
+    /* ── Hero Slideshow ── */
+    .hero {
+      position: relative;
+      height: 85vh;
+      min-height: 500px;
+      overflow: hidden;
+      background: #111;
+    }
+    .hero__slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+      background-size: cover;
+      background-position: center;
+    }
+    .hero__slide.active { opacity: 1; }
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .hero__title {
+      font-size: clamp(32px, 6vw, 72px);
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero__btn {
+      display: inline-block;
+      padding: 14px 48px;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all .3s;
+    }
+    .hero__btn:hover { background: #fff; color: #1c1d1d; }
 
-  <!-- JSON-LD: BreadcrumbList -->
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://YOUR_DOMAIN/"}]}
-  </script>
+    /* ── Dots ── */
+    .hero__dots {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 5;
+    }
+    .hero__dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      background: transparent;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .hero__dot.active { background: #fff; }
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="/styles/site.css">
-  <link rel="stylesheet" href="/styles/tailwind.out.css">
+    /* ── Promo Banner ── */
+    .promo-banner {
+      background: linear-gradient(90deg, #471669, #a22155);
+      color: #fff;
+      text-align: center;
+      padding: 28px 20px;
+    }
+    .promo-banner h2 { font-size: clamp(18px, 3vw, 28px); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/favicon.png">
+    /* ── Section Titles ── */
+    .section-title {
+      text-align: center;
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+
+    /* ── Products Grid ── */
+    .products { padding: 60px 40px; background: #f9f9f9; }
+    .products__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 36px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      transition: box-shadow .3s;
+      padding-bottom: 28px;
+    }
+    .product-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,.1); }
+    .product-card img { width: 100%; aspect-ratio: 1; object-fit: contain; padding: 20px; background: #fafafa; }
+    .product-card h3 { font-size: 18px; font-weight: 700; margin: 16px 0 6px; }
+    .product-card .price { font-size: 16px; color: #a22155; font-weight: 700; }
+    .product-card .price-range { font-size: 13px; color: #888; }
+    .product-card .shop-btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 32px;
+      background: #1c1d1d;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      transition: background .3s;
+    }
+    .product-card .shop-btn:hover { background: #a22155; }
+
+    /* ── Features Strip ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      background: #1c1d1d;
+      color: #fff;
+      text-align: center;
+    }
+    .feature-item {
+      padding: 40px 20px;
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+    .feature-item:last-child { border-right: none; }
+    .feature-item .number { font-size: 36px; font-weight: 900; color: #a22155; }
+    .feature-item .label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+
+    /* ── Adventure Section ── */
+    .adventure {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 500px;
+    }
+    .adventure__img {
+      background: url('https://zugobike.com/cdn/shop/files/ZuGo_-_Color_Grade__004_1_1400x.png') center/cover;
+    }
+    .adventure__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      background: #f9f9f9;
+    }
+    .adventure__content h2 {
+      font-size: clamp(26px, 3vw, 42px);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .adventure__content p { font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 24px; }
+    .adventure__btn {
+      display: inline-block;
+      padding: 12px 36px;
+      background: #1c1d1d;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      align-self: flex-start;
+      transition: background .3s;
+    }
+    .adventure__btn:hover { background: #a22155; }
+
+    @media (max-width: 768px) {
+      .adventure { grid-template-columns: 1fr; }
+      .adventure__img { min-height: 300px; }
+      .adventure__content { padding: 40px 20px; }
+    }
+
+    /* ── Financing ── */
+    .financing {
+      padding: 60px 40px;
+      text-align: center;
+      background: #fff;
+    }
+    .financing p { max-width: 600px; margin: 0 auto 24px; font-size: 15px; line-height: 1.7; color: #555; }
+    .financing__btn {
+      display: inline-block;
+      padding: 14px 48px;
+      background: linear-gradient(90deg, #471669, #a22155);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      transition: opacity .3s;
+    }
+    .financing__btn:hover { opacity: .9; }
+
+    /* ── Accessories ── */
+    .accessories { padding: 60px 40px; background: #f9f9f9; }
+    .accessories__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .acc-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      padding-bottom: 20px;
+      transition: box-shadow .3s;
+    }
+    .acc-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+    .acc-card img { width: 100%; aspect-ratio: 1; object-fit: contain; padding: 16px; }
+    .acc-card h3 { font-size: 15px; font-weight: 700; margin: 10px 0 4px; }
+    .acc-card .price { font-size: 14px; color: #a22155; font-weight: 600; }
+
+    /* ── Testimonials ── */
+    .testimonials { padding: 60px 40px; background: #fff; }
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 32px;
+    }
+    .stars { color: #fed200; font-size: 18px; margin-bottom: 12px; }
+    .testimonial-card p { font-size: 14px; line-height: 1.7; color: #555; font-style: italic; margin-bottom: 16px; }
+    .testimonial-card .author { font-size: 13px; font-weight: 700; color: #1c1d1d; }
+    .testimonial-card .verified { font-size: 11px; color: #888; }
+
+    /* ── Trees Section ── */
+    .trees {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 400px;
+    }
+    .trees__img {
+      background: url('https://zugobike.com/cdn/shop/files/10_TreesPlanted_002_1400x.jpg') center/cover;
+    }
+    .trees__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px;
+      text-align: center;
+      background: #1c1d1d;
+      color: #fff;
+    }
+    .trees__content h2 { font-size: clamp(24px, 3vw, 38px); font-weight: 900; text-transform: uppercase; margin-bottom: 12px; }
+    .trees__content p { font-size: 15px; line-height: 1.7; opacity: .8; max-width: 400px; }
+
+    @media (max-width: 768px) {
+      .trees { grid-template-columns: 1fr; }
+      .trees__img { min-height: 280px; }
+    }
+
+    /* ── Blog ── */
+    .blog { padding: 60px 40px; background: #f9f9f9; }
+    .blog__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .blog-card { background: #fff; border-radius: 8px; overflow: hidden; transition: box-shadow .3s; }
+    .blog-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+    .blog-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+    .blog-card__body { padding: 20px; }
+    .blog-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .blog-card p { font-size: 13px; color: #777; line-height: 1.6; }
+
+    /* ── Footer ── */
+    .footer {
+      background: #1c1d1d;
+      color: #fff;
+      padding: 60px 40px 30px;
+    }
+    .footer__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto 40px;
+    }
+    .footer h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .footer ul { list-style: none; }
+    .footer li { margin-bottom: 8px; }
+    .footer li a { font-size: 13px; opacity: .7; transition: opacity .3s; }
+    .footer li a:hover { opacity: 1; }
+    .footer__logo img { height: 40px; margin-bottom: 16px; }
+    .footer__social { display: flex; gap: 14px; margin-top: 12px; }
+    .footer__social a { opacity: .7; transition: opacity .3s; }
+    .footer__social a:hover { opacity: 1; }
+    .footer__social svg { width: 20px; height: 20px; }
+    .footer__newsletter input {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #fff;
+      font-size: 13px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .footer__newsletter input::placeholder { color: rgba(255,255,255,.5); }
+    .footer__newsletter button {
+      padding: 10px 24px;
+      background: #a22155;
+      color: #fff;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .footer__newsletter button:hover { background: #471669; }
+    .footer__bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      font-size: 12px;
+      opacity: .5;
+    }
+
+    /* ── Utility ── */
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  </style>
 </head>
 <body>
-  <span data-site-version style="display:none;">v260401.01 7:04p</span>
-  <div id="siteHeader"></div>
-  <h1 class="sr-only">Austin YOUR_PROPERTY_NAME — Creative Compound in Your City, Texas</h1>
 
-  <!-- Hero Section -->
-  <section class="aap-hero" style="background-image: url('YOUR_SUPABASE_URL/storage/v1/object/public/housephotos/site/hero-property.jpeg')">
-    <div class="aap-hero__content">
-      <p class="aap-hero__subtitle" style="margin-top: 2rem;">
-        At the Austin YOUR_PROPERTY_NAME our mission is to let your Property Dreams run free. Our goal is to redefine your idea of what an YOUR_PROPERTY_NAME can be. When it comes to selecting an YOUR_PROPERTY_NAME, we feel no one need settle.
-      </p>
+  <!-- Announcement Bar -->
+  <div class="announcement">
+    FREE SHIPPING FOR E-BIKES &nbsp;&bull;&nbsp; <a href="mailto:info@zugo.bike">INFO@ZUGO.BIKE</a>
+  </div>
 
-      <a href="/spaces/" class="aap-btn aap-btn--outline aap-btn--light" style="margin-top: 1rem;">View Available Spaces</a>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="/" class="navbar__logo">
+      <img src="https://zugobike.com/cdn/shop/files/ZuGo_Logo_BLK_280x_1_230x.png" alt="ZUGO Bike">
+    </a>
+    <div class="navbar__links">
+      <a href="#products">ZUGO E-Bikes</a>
+      <a href="#accessories">Accessories</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#blog">Blog</a>
+      <a href="#footer">Our Story</a>
+      <a href="#footer">Contact</a>
+    </div>
+    <div class="navbar__actions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <button class="mobile-menu-btn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Slideshow -->
+  <section class="hero">
+    <div class="hero__slide active" style="background-image: url('https://zugobike.com/cdn/shop/files/ZuGo_Homepage_slideshow_1_1400x.png')"></div>
+    <div class="hero__slide" style="background-image: url('https://zugobike.com/cdn/shop/files/zugo_fat_tire_ebike_commute_1400x.jpg')"></div>
+    <div class="hero__slide" style="background-image: url('https://zugobike.com/cdn/shop/files/ZuGo_-_Color_Grade__002_1_1400x.png')"></div>
+    <div class="hero__slide" style="background-image: url('https://zugobike.com/cdn/shop/files/ZuGo_-_Color_Grade__005_1400x.png')"></div>
+    <div class="hero__slide" style="background-image: url('https://zugobike.com/cdn/shop/files/ZuGo_-_Color_Grade__003_7d6bddd6-5841-44a2-85cf-d0e8c0a0f284_1400x.png')"></div>
+    <div class="hero__overlay">
+      <h1 class="hero__title" id="hero-text">Powerful & Stylish E-Bikes</h1>
+      <a href="#products" class="hero__btn">Shop Now</a>
+    </div>
+    <div class="hero__dots">
+      <span class="hero__dot active" data-slide="0"></span>
+      <span class="hero__dot" data-slide="1"></span>
+      <span class="hero__dot" data-slide="2"></span>
+      <span class="hero__dot" data-slide="3"></span>
+      <span class="hero__dot" data-slide="4"></span>
+    </div>
+  </section>
+
+  <!-- Promo Banner -->
+  <div class="promo-banner">
+    <h2>Get $200 Discount on a Single Bike</h2>
+  </div>
+
+  <!-- Features Strip -->
+  <div class="features">
+    <div class="feature-item">
+      <div class="number">750W</div>
+      <div class="label">Motor Power</div>
+    </div>
+    <div class="feature-item">
+      <div class="number">80 mi</div>
+      <div class="label">Max Range</div>
+    </div>
+    <div class="feature-item">
+      <div class="number">1200+</div>
+      <div class="label">Lumen Headlight</div>
+    </div>
+    <div class="feature-item">
+      <div class="number">4"</div>
+      <div class="label">Fat Tires</div>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <section class="products" id="products">
+    <h2 class="section-title">Our E-Bikes</h2>
+    <div class="products__grid">
+      <div class="product-card">
+        <img src="https://zugobike.com/cdn/shop/files/ZuGoRhinoBlackStep-Over_400x.jpg" alt="ZUGO Rhino Step-Over" loading="lazy">
+        <h3>ZUGO Rhino — Step-Over</h3>
+        <div class="price">From $1,999</div>
+        <div class="price-range">$1,999 – $2,399</div>
+        <a href="#" class="shop-btn">View Details</a>
+      </div>
+      <div class="product-card">
+        <img src="https://zugobike.com/cdn/shop/files/ZuGoRhinoBlackStep-Thru_13e85b1d-8e93-41cd-bd86-09a774c2fe58_400x.jpg" alt="ZUGO Rhino Step-Thru" loading="lazy">
+        <h3>ZUGO Rhino — Step-Thru</h3>
+        <div class="price">From $1,999</div>
+        <div class="price-range">$1,999 – $2,199</div>
+        <a href="#" class="shop-btn">View Details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Adventure Section -->
+  <section class="adventure">
+    <div class="adventure__img"></div>
+    <div class="adventure__content">
+      <h2>Adventure for Two!</h2>
+      <p>The ZUGO Rhino is built for more than just solo rides. With a powerful 750W motor, heavy-duty frame, and oversized rear rack, it's designed to carry a passenger with ease. Whether you're commuting, exploring trails, or just cruising around town — bring someone along for the ride.</p>
+      <a href="#products" class="adventure__btn">Explore Bikes</a>
+    </div>
+  </section>
+
+  <!-- Financing -->
+  <section class="financing">
+    <h2 class="section-title">Ride Now, Pay Later</h2>
+    <p>Split your purchase into easy, interest-free payments. Get on the road today without breaking the bank. We've partnered with Sezzle to make e-bike ownership accessible to everyone.</p>
+    <a href="#" class="financing__btn">Learn About Financing</a>
+  </section>
+
+  <!-- Accessories -->
+  <section class="accessories" id="accessories">
+    <h2 class="section-title">Parts & Accessories</h2>
+    <div class="accessories__grid">
+      <div class="acc-card">
+        <img src="https://zugobike.com/cdn/shop/files/RhinoHandleBarMirrorSet_400x.jpg" alt="Bike Mirrors" loading="lazy">
+        <h3>ZUGO Bike Mirrors</h3>
+        <div class="price">$45.00</div>
+      </div>
+      <div class="acc-card">
+        <img src="https://zugobike.com/cdn/shop/products/PhoneHolder_400x.jpg" alt="Phone Holder" loading="lazy">
+        <h3>ZUGO Phone Holder</h3>
+        <div class="price">$35.00</div>
+      </div>
+      <div class="acc-card">
+        <img src="https://zugobike.com/cdn/shop/products/ZuGoKaliTrafficHelmetBlack_400x.jpg" alt="Kali Traffic Helmet" loading="lazy">
+        <h3>Kali Traffic Helmet</h3>
+        <div class="price">$100.00</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials" id="testimonials">
+    <h2 class="section-title">Customer Reviews</h2>
+    <div class="testimonials__grid">
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"This bike is a game changer. I commute 15 miles each way and still have battery to spare. The fat tires handle everything from gravel to city streets like a dream."</p>
+        <div class="author">Michael R.</div>
+        <div class="verified">Verified Purchaser</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"I bought the Step-Thru for my wife and she absolutely loves it. Super easy to get on and off, plenty of power for hills, and the range is incredible. Already ordering a second one for myself."</p>
+        <div class="author">James T.</div>
+        <div class="verified">Verified Purchaser</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"Best e-bike for the money, hands down. The build quality is top-notch and the customer service team was incredibly helpful during setup. Highly recommend ZUGO."</p>
+        <div class="author">Sarah K.</div>
+        <div class="verified">Verified Purchaser</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trees Section -->
+  <section class="trees">
+    <div class="trees__img"></div>
+    <div class="trees__content">
+      <h2>10 Trees Planted for Every Bike Sold</h2>
+      <p>We believe in giving back to the planet. For every ZUGO bike sold, we plant 10 trees through our reforestation partner. Ride green, live green.</p>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section class="blog" id="blog">
+    <h2 class="section-title">From the Blog</h2>
+    <div class="blog__grid">
+      <div class="blog-card">
+        <img src="https://zugobike.com/cdn/shop/articles/Articles_-_Should_I_400x.jpg" alt="Blog post" loading="lazy">
+        <div class="blog-card__body">
+          <h3>Electric Dirt Bikes for Teenagers</h3>
+          <p>Everything you need to know about getting your teen started with electric bikes safely and affordably.</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <img src="https://zugobike.com/cdn/shop/articles/rhino_step_thru_fat_tire_ebike_2c0522d9-eb67-4b1f-8061-ed56f912051e_400x.png" alt="Blog post" loading="lazy">
+        <div class="blog-card__body">
+          <h3>Best E-Bikes for Teens in 2026</h3>
+          <p>A curated guide to the top-rated electric bikes that combine safety, performance, and style for young riders.</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <img src="https://zugobike.com/cdn/shop/articles/IMG_5495_fc1063bc-3471-4aef-84f6-b8e338cd1420_400x.png" alt="Blog post" loading="lazy">
+        <div class="blog-card__body">
+          <h3>Battery Storage Best Practices</h3>
+          <p>How to properly store and maintain your e-bike battery to maximize its lifespan and performance.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="aap-footer">
-    <div class="aap-footer__content">
-      <div class="aap-footer__logo">
-        <img width="21" height="30" src="YOUR_SUPABASE_URL/storage/v1/object/public/housephotos/logos/logo-white-transparent.png" alt="YOUR_PROPERTY_NAME Austin" class="aap-footer__icon">
-            <img width="22" height="22" src="YOUR_SUPABASE_URL/storage/v1/object/public/housephotos/logos/wordmark-white-transparent.png" alt="YOUR_PROPERTY_NAME Austin" class="aap-footer__wordmark">
+  <footer class="footer" id="footer">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">
+          <img src="https://zugobike.com/cdn/shop/files/ZuGo_logo_wht_250x44_990e26f6-02db-46a7-b762-4354383d4920_230x.png" alt="ZUGO Bike">
+        </div>
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.6C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-2A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.63a8.23 8.23 0 004.76 1.51v-3.4a4.85 4.85 0 01-1-.05z"/></svg>
+          </a>
+        </div>
       </div>
-
-      <div class="aap-footer__social">
-        <a href="https://www.facebook.com/yourorg" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg>
-        </a>
-        <a href="https://instagram.com/yourorgatx" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="18" cy="6" r="1" fill="currentColor"/>
-          </svg>
-        </a>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">Rhino Step-Over</a></li>
+          <li><a href="#">Rhino Step-Thru</a></li>
+          <li><a href="#">Upgrades</a></li>
+          <li><a href="#">Accessories</a></li>
+          <li><a href="#">Parts</a></li>
+          <li><a href="#">Tires</a></li>
+        </ul>
       </div>
-
-      <p class="aap-footer__copyright">
-        © 2026 Austin YOUR_PROPERTY_NAME. All rights reserved.<br>
-        123 Main Stive, Your City, TX 00000
-      </p>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Assembly Manual</a></li>
+          <li><a href="#">Financing</a></li>
+          <li><a href="#">Returns & Refunds</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Reviews</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Stay Connected</h4>
+        <div class="footer__newsletter">
+          <input type="email" placeholder="Enter your email">
+          <button>Subscribe</button>
+        </div>
+        <p style="margin-top: 16px; font-size: 13px; opacity: .6;">info@zugo.bike</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      &copy; 2026 ZUGO Bike. All rights reserved.
     </div>
   </footer>
 
-  <script src="/vendor/supabase-js-2.39.3.min.js"></script>
-  <script type="module" src="shared/version-info.js"></script>
-  <script type="module">
-    import { initPublicPage } from './shared/public-shell.js';
+  <!-- Slideshow Script -->
+  <script>
+    (function() {
+      const slides = document.querySelectorAll('.hero__slide');
+      const dots = document.querySelectorAll('.hero__dot');
+      const heroTexts = [
+        'Powerful & Stylish E-Bikes',
+        '750 Watts on Tap',
+        'Up to 80 Miles Range',
+        '1200+ Lumen Headlight',
+        'Designed & Engineered in Austin'
+      ];
+      let current = 0;
 
-    initPublicPage({ transparent: true, light: true });
+      function goTo(idx) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = idx;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        document.getElementById('hero-text').textContent = heroTexts[current];
+      }
+
+      dots.forEach(dot => dot.addEventListener('click', () => goTo(+dot.dataset.slide)));
+      setInterval(() => goTo((current + 1) % slides.length), 5000);
+    })();
   </script>
+
+  <span data-site-version style="display:none;">v260401.01 7:04p</span>
 </body>
 </html>
