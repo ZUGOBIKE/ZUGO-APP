@@ -651,10 +651,11 @@
       </div>
       <div>
         <h4>Stay Connected</h4>
-        <div class="footer__newsletter">
-          <input type="email" placeholder="Enter your email">
-          <button>Subscribe</button>
-        </div>
+        <form class="footer__newsletter" id="newsletter-form">
+          <input type="email" id="newsletter-email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+          <p id="newsletter-msg" style="font-size: 12px; margin-top: 6px; display: none;"></p>
+        </form>
         <p style="margin-top: 16px; font-size: 13px; opacity: .6;">info@zugo.bike</p>
       </div>
     </div>
@@ -689,6 +690,42 @@
       dots.forEach(dot => dot.addEventListener('click', () => goTo(+dot.dataset.slide)));
       setInterval(() => goTo((current + 1) % slides.length), 5000);
     })();
+
+    // Newsletter signup
+    document.getElementById('newsletter-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('newsletter-email').value;
+      const msg = document.getElementById('newsletter-msg');
+      const btn = this.querySelector('button');
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      msg.style.display = 'none';
+
+      try {
+        const res = await fetch('WORKER_URL_PLACEHOLDER', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          msg.textContent = 'You\'re in! Check your inbox for a welcome email.';
+          msg.style.color = '#4ade80';
+          document.getElementById('newsletter-email').value = '';
+        } else {
+          msg.textContent = data.error || 'Something went wrong. Try again.';
+          msg.style.color = '#f87171';
+        }
+      } catch {
+        msg.textContent = 'Connection error. Please try again.';
+        msg.style.color = '#f87171';
+      }
+
+      msg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Subscribe';
+    });
   </script>
 
   <span data-site-version style="display:none;">v260401.01 7:04p</span>
